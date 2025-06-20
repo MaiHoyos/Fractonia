@@ -421,7 +421,7 @@
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .header-character {
@@ -530,7 +530,7 @@
                         <p style="color: #d1d5db; font-size: 0.875rem; margin-bottom: 1rem;">
                             Valiente y determinado, Alex está listo para enfrentar cualquier desafío matemático.
                         </p>
-                        <button class="btn boy">Elegir Alex</button>
+                        <button class="btn boy" onclick="event.stopPropagation(); startGame('boy')">Elegir Alex</button>
                     </div>
                     
                     <div class="character-card girl" onclick="startGame('girl')">
@@ -539,7 +539,7 @@
                         <p style="color: #d1d5db; font-size: 0.875rem; margin-bottom: 1rem;">
                             Inteligente y curiosa, Emma domina las fracciones con facilidad y gracia.
                         </p>
-                        <button class="btn girl">Elegir Emma</button>
+                        <button class="btn girl" onclick="event.stopPropagation(); startGame('girl')">Elegir Emma</button>
                     </div>
                 </div>
             </div>
@@ -758,23 +758,40 @@
 
         // Start game with character selection
         function startGame(character) {
+            console.log('Starting game with character:', character);
+            
             gameState.selectedCharacter = character;
             gameState.gameStarted = true;
             
-            document.getElementById('characterSelection').classList.add('hidden');
-            document.getElementById('mainGame').classList.remove('hidden');
+            // Hide character selection
+            const characterSelection = document.getElementById('characterSelection');
+            const mainGame = document.getElementById('mainGame');
             
-            // Update character display
-            const emoji = character === 'boy' ? '👦' : '👧';
-            const name = character === 'boy' ? 'Alex el Aventurero' : 'Emma la Exploradora';
-            
-            document.getElementById('characterEmoji').textContent = emoji;
-            document.getElementById('characterInfo').textContent = `Jugando como: ${name}`;
+            if (characterSelection && mainGame) {
+                characterSelection.classList.add('hidden');
+                mainGame.classList.remove('hidden');
+                
+                // Update character display
+                const emoji = character === 'boy' ? '👦' : '👧';
+                const name = character === 'boy' ? 'Alex el Aventurero' : 'Emma la Exploradora';
+                
+                const characterEmoji = document.getElementById('characterEmoji');
+                const characterInfo = document.getElementById('characterInfo');
+                
+                if (characterEmoji) characterEmoji.textContent = emoji;
+                if (characterInfo) characterInfo.textContent = `Jugando como: ${name}`;
+                
+                console.log('Game started successfully');
+            } else {
+                console.error('Could not find required elements');
+            }
         }
 
         // Claim Badge 1
         function claimBadge1() {
-            const studentName = document.getElementById('studentName').value.trim();
+            const studentNameInput = document.getElementById('studentName');
+            const studentName = studentNameInput ? studentNameInput.value.trim() : '';
+            
             if (!studentName) {
                 alert('Por favor, escribe tu nombre para reclamar la insignia.');
                 return;
@@ -784,16 +801,31 @@
             gameState.badges.badge1 = true;
             
             // Update UI
-            document.getElementById('badge1Circle').classList.add('earned');
-            document.getElementById('badge1Circle').innerHTML = '<img src="https://via.placeholder.com/64x64/FFA500/FFFFFF?text=1" alt="Insignia 1">';
-            document.getElementById('badge1Label').classList.add('earned');
-            document.getElementById('badge1Success').classList.remove('hidden');
-            document.getElementById('badge1Success').innerHTML = `🎖 ¡Felicidades, ${studentName}! Has ganado la Insignia de Videos.`;
-            document.getElementById('claimBadge1Btn').disabled = true;
-            document.getElementById('claimBadge1Btn').innerHTML = '✓ Insignia Obtenida';
+            const badge1Circle = document.getElementById('badge1Circle');
+            const badge1Label = document.getElementById('badge1Label');
+            const badge1Success = document.getElementById('badge1Success');
+            const claimBadge1Btn = document.getElementById('claimBadge1Btn');
+            const gamesSection = document.getElementById('gamesSection');
+            
+            if (badge1Circle) {
+                badge1Circle.classList.add('earned');
+                badge1Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/FFA500/FFFFFF?text=1" alt="Insignia 1">';
+            }
+            
+            if (badge1Label) badge1Label.classList.add('earned');
+            
+            if (badge1Success) {
+                badge1Success.classList.remove('hidden');
+                badge1Success.innerHTML = `🎖 ¡Felicidades, ${studentName}! Has ganado la Insignia de Videos.`;
+            }
+            
+            if (claimBadge1Btn) {
+                claimBadge1Btn.disabled = true;
+                claimBadge1Btn.innerHTML = '✓ Insignia Obtenida';
+            }
             
             // Show games section
-            document.getElementById('gamesSection').classList.remove('hidden');
+            if (gamesSection) gamesSection.classList.remove('hidden');
             
             // Update floating badges
             updateFloatingBadges();
@@ -806,16 +838,31 @@
             gameState.badges.badge2 = true;
             
             // Update UI
-            document.getElementById('badge2Circle').classList.add('earned');
-            document.getElementById('badge2Circle').innerHTML = '<img src="https://via.placeholder.com/64x64/FF6B35/FFFFFF?text=2" alt="Insignia 2">';
-            document.getElementById('badge2Label').classList.add('earned');
-            document.getElementById('badge2Success').classList.remove('hidden');
-            document.getElementById('badge2Success').innerHTML = `🎖 ¡Excelente, ${gameState.currentName}! Has ganado la Insignia de Juegos.`;
-            document.getElementById('claimBadge2Btn').disabled = true;
-            document.getElementById('claimBadge2Btn').innerHTML = '✓ Insignia Obtenida';
+            const badge2Circle = document.getElementById('badge2Circle');
+            const badge2Label = document.getElementById('badge2Label');
+            const badge2Success = document.getElementById('badge2Success');
+            const claimBadge2Btn = document.getElementById('claimBadge2Btn');
+            const simulationSection = document.getElementById('simulationSection');
+            
+            if (badge2Circle) {
+                badge2Circle.classList.add('earned');
+                badge2Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/FF6B35/FFFFFF?text=2" alt="Insignia 2">';
+            }
+            
+            if (badge2Label) badge2Label.classList.add('earned');
+            
+            if (badge2Success) {
+                badge2Success.classList.remove('hidden');
+                badge2Success.innerHTML = `🎖 ¡Excelente, ${gameState.currentName}! Has ganado la Insignia de Juegos.`;
+            }
+            
+            if (claimBadge2Btn) {
+                claimBadge2Btn.disabled = true;
+                claimBadge2Btn.innerHTML = '✓ Insignia Obtenida';
+            }
             
             // Show simulation section
-            document.getElementById('simulationSection').classList.remove('hidden');
+            if (simulationSection) simulationSection.classList.remove('hidden');
             
             // Update floating badges
             updateFloatingBadges();
@@ -828,13 +875,27 @@
             gameState.badges.badge3 = true;
             
             // Update UI
-            document.getElementById('badge3Circle').classList.add('earned');
-            document.getElementById('badge3Circle').innerHTML = '<img src="https://via.placeholder.com/64x64/4ECDC4/FFFFFF?text=3" alt="Insignia 3">';
-            document.getElementById('badge3Label').classList.add('earned');
-            document.getElementById('badge3Success').classList.remove('hidden');
-            document.getElementById('badge3Success').innerHTML = `🎖 ¡Increíble, ${gameState.currentName}! Has ganado la Insignia de Simulación.`;
-            document.getElementById('claimBadge3Btn').disabled = true;
-            document.getElementById('claimBadge3Btn').innerHTML = '✓ Insignia Obtenida';
+            const badge3Circle = document.getElementById('badge3Circle');
+            const badge3Label = document.getElementById('badge3Label');
+            const badge3Success = document.getElementById('badge3Success');
+            const claimBadge3Btn = document.getElementById('claimBadge3Btn');
+            
+            if (badge3Circle) {
+                badge3Circle.classList.add('earned');
+                badge3Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/4ECDC4/FFFFFF?text=3" alt="Insignia 3">';
+            }
+            
+            if (badge3Label) badge3Label.classList.add('earned');
+            
+            if (badge3Success) {
+                badge3Success.classList.remove('hidden');
+                badge3Success.innerHTML = `🎖 ¡Increíble, ${gameState.currentName}! Has ganado la Insignia de Simulación.`;
+            }
+            
+            if (claimBadge3Btn) {
+                claimBadge3Btn.disabled = true;
+                claimBadge3Btn.innerHTML = '✓ Insignia Obtenida';
+            }
             
             // Update floating badges
             updateFloatingBadges();
@@ -850,6 +911,8 @@
             const container = document.getElementById('floatingBadgesContainer');
             const nameDiv = document.getElementById('floatingBadgesName');
             const floatingBadges = document.getElementById('floatingBadges');
+            
+            if (!container || !nameDiv || !floatingBadges) return;
             
             container.innerHTML = '';
             
@@ -895,15 +958,22 @@
 
         // Show adventure modal
         function showAdventureModal() {
+            const modal = document.getElementById('adventureModal');
+            const modalCongratsText = document.getElementById('modalCongratsText');
+            const modalCharacterText = document.getElementById('modalCharacterText');
+            
+            if (!modal || !modalCongratsText || !modalCharacterText) return;
+            
             const characterName = gameState.selectedCharacter === 'boy' ? '👦 Alex' : '👧 Emma';
-            document.getElementById('modalCongratsText').textContent = `¡Increíble, ${gameState.currentName}! Has obtenido las 3 insignias sagradas de Fractonia.`;
-            document.getElementById('modalCharacterText').textContent = `${characterName} está preparado para la aventura final.`;
-            document.getElementById('adventureModal').classList.remove('hidden');
+            modalCongratsText.textContent = `¡Increíble, ${gameState.currentName}! Has obtenido las 3 insignias sagradas de Fractonia.`;
+            modalCharacterText.textContent = `${characterName} está preparado para la aventura final.`;
+            modal.classList.remove('hidden');
         }
 
         // Handle adventure response
         function handleAdventureResponse(ready) {
-            document.getElementById('adventureModal').classList.add('hidden');
+            const modal = document.getElementById('adventureModal');
+            if (modal) modal.classList.add('hidden');
             
             if (ready) {
                 showGameScreen();
@@ -912,26 +982,40 @@
 
         // Show game screen
         function showGameScreen() {
-            document.getElementById('mainGame').classList.add('hidden');
-            document.getElementById('gameScreen').classList.remove('hidden');
+            const mainGame = document.getElementById('mainGame');
+            const gameScreen = document.getElementById('gameScreen');
+            
+            if (!mainGame || !gameScreen) return;
+            
+            mainGame.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
             
             const characterEmoji = gameState.selectedCharacter === 'boy' ? '👦 Alex' : '👧 Emma';
             const characterName = gameState.selectedCharacter === 'boy' ? 'Alex' : 'Emma';
             
-            document.getElementById('gameCharacterEmoji').textContent = characterEmoji;
-            document.getElementById('congratsMessage').textContent = `¡Felicidades, ${gameState.currentName}! Has completado tu entrenamiento y obtenido las 3 insignias sagradas.`;
-            document.getElementById('readyMessage').textContent = `Ahora ${characterName} está listo para la expedición final para recuperar las gemas perdidas.`;
+            const gameCharacterEmoji = document.getElementById('gameCharacterEmoji');
+            const congratsMessage = document.getElementById('congratsMessage');
+            const readyMessage = document.getElementById('readyMessage');
+            
+            if (gameCharacterEmoji) gameCharacterEmoji.textContent = characterEmoji;
+            if (congratsMessage) congratsMessage.textContent = `¡Felicidades, ${gameState.currentName}! Has completado tu entrenamiento y obtenido las 3 insignias sagradas.`;
+            if (readyMessage) readyMessage.textContent = `Ahora ${characterName} está listo para la expedición final para recuperar las gemas perdidas.`;
         }
 
         // Back to training
         function backToTraining() {
-            document.getElementById('gameScreen').classList.add('hidden');
-            document.getElementById('mainGame').classList.remove('hidden');
+            const gameScreen = document.getElementById('gameScreen');
+            const mainGame = document.getElementById('mainGame');
+            
+            if (gameScreen && mainGame) {
+                gameScreen.classList.add('hidden');
+                mainGame.classList.remove('hidden');
+            }
         }
 
-        // Initialize
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            // Game starts with character selection
+            console.log('Page loaded, game ready');
         });
     </script>
 </body>
