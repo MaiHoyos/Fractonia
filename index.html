@@ -105,6 +105,12 @@
   <p>¿Qué son las fracciones?</p>
   <iframe width="560" height="315" src="https://www.youtube.com/embed/c9cTIjBqFTw?si=YeGAoz0S06qFwXg6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
+  <p>Escribe tu nombre para obtener la insignia 1:</p>
+  <input type="text" id="nombre1" placeholder="Tu nombre aquí">
+  <button onclick="mostrarInsignia('nombre1', 'insignia1', 'imgInsignia1')">Enviar</button>
+  <div class="badge" id="insignia1"></div>
+  <img id="imgInsignia1" class="insignia-img" src="1.png" alt="Insignia 1">
+
   <p>Aprende a leer fracciones</p>
   <iframe width="560" height="315" src="https://www.youtube.com/embed/DVXZi9ZWFvo?si=2429iEQKauDrrV_e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -113,13 +119,19 @@
   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
 
+  <p>Escribe tu nombre para obtener la insignia 2:</p>
+  <input type="text" id="nombre2" placeholder="Tu nombre aquí">
+  <button onclick="mostrarInsignia('nombre2', 'insignia2', 'imgInsignia2')">Enviar</button>
+  <div class="badge" id="insignia2"></div>
+  <img id="imgInsignia2" class="insignia-img" src="2.png" alt="Insignia 2">
+
   <iframe src="https://phet.colorado.edu/sims/html/fraction-matcher/latest/fraction-matcher_es.html" width="800" height="600" allowfullscreen></iframe>
 
-  <p>Escribe tu nombre y reclama tu insignia de entrenamiento:</p>
-  <input type="text" id="nombreAlumno" placeholder="Tu nombre aquí">
-  <button onclick="mostrarInsignia()">Enviar</button>
-  <div class="badge" id="insignia"></div>
-  <img id="imgInsignia" class="insignia-img" src="1.png" alt="Insignia obtenida">
+  <p>Escribe tu nombre para obtener la insignia 3:</p>
+  <input type="text" id="nombre3" placeholder="Tu nombre aquí">
+  <button onclick="mostrarInsignia('nombre3', 'insignia3', 'imgInsignia3')">Enviar</button>
+  <div class="badge" id="insignia3"></div>
+  <img id="imgInsignia3" class="insignia-img" src="3.png" alt="Insignia 3">
 </section>
 
 <section>
@@ -141,12 +153,12 @@
 </footer>
 
 <script>
-function mostrarInsignia() {
-  const nombre = document.getElementById("nombreAlumno").value;
-  const insignia = document.getElementById("insignia");
-  const img = document.getElementById("imgInsignia");
+function mostrarInsignia(inputId, mensajeId, imagenId) {
+  const nombre = document.getElementById(inputId).value;
+  const insignia = document.getElementById(mensajeId);
+  const img = document.getElementById(imagenId);
   if (nombre.trim() !== "") {
-    insignia.innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado la Insignia de Entrenamiento.`;
+    insignia.innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado una insignia.`;
     img.style.display = 'block';
   } else {
     insignia.innerText = "Por favor, escribe tu nombre para recibir tu insignia.";
