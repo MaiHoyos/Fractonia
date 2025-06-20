@@ -193,6 +193,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
+            object-fit: cover;
         }
 
         .floating-badge-check {
@@ -247,6 +248,8 @@
         .badge-circle img {
             width: 64px;
             height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .badge-label {
@@ -833,7 +836,7 @@
             
             if (badge1Circle) {
                 badge1Circle.classList.add('earned');
-                badge1Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/FFA500/FFFFFF?text=1" alt="Insignia 1">';
+                badge1Circle.innerHTML = '<img src="badge1.png" alt="Insignia 1">';
             }
             
             if (badge1Label) badge1Label.classList.add('earned');
@@ -870,7 +873,7 @@
             
             if (badge2Circle) {
                 badge2Circle.classList.add('earned');
-                badge2Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/FF6B35/FFFFFF?text=2" alt="Insignia 2">';
+                badge2Circle.innerHTML = '<img src="badge2.png" alt="Insignia 2">';
             }
             
             if (badge2Label) badge2Label.classList.add('earned');
@@ -906,7 +909,7 @@
             
             if (badge3Circle) {
                 badge3Circle.classList.add('earned');
-                badge3Circle.innerHTML = '<img src="https://via.placeholder.com/64x64/4ECDC4/FFFFFF?text=3" alt="Insignia 3">';
+                badge3Circle.innerHTML = '<img src="badge3.png" alt="Insignia 3">';
             }
             
             if (badge3Label) badge3Label.classList.add('earned');
@@ -943,21 +946,21 @@
             const badges = [];
             if (gameState.badges.badge1) {
                 badges.push({
-                    src: 'https://via.placeholder.com/48x48/FFA500/FFFFFF?text=1',
+                    src: 'badge1.png',
                     alt: 'Insignia Videos',
                     title: 'Videos Completados'
                 });
             }
             if (gameState.badges.badge2) {
                 badges.push({
-                    src: 'https://via.placeholder.com/48x48/FF6B35/FFFFFF?text=2',
+                    src: 'badge2.png',
                     alt: 'Insignia Juegos',
                     title: 'Juegos Completados'
                 });
             }
             if (gameState.badges.badge3) {
                 badges.push({
-                    src: 'https://via.placeholder.com/48x48/4ECDC4/FFFFFF?text=3',
+                    src: 'badge3.png',
                     alt: 'Insignia Simulación',
                     title: 'Simulación Completada'
                 });
