@@ -122,6 +122,8 @@
             font-size: 1rem;
             margin-top: 1rem;
             transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
@@ -305,6 +307,7 @@
             border-radius: 0.5rem;
             overflow: hidden;
             text-align: center;
+            padding: 1.5rem;
         }
 
         .game-title {
@@ -314,19 +317,53 @@
             font-weight: bold;
             color: #fbbf24;
             font-size: 1rem;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
         }
 
-        .game-iframe-container {
-            padding: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 400px;
+        .game-description {
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
-        .game-iframe-container iframe {
+        .game-link {
+            background: #059669;
+            color: white;
+            padding: 1rem 2rem;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .game-link:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-link:visited {
+            color: white;
+        }
+
+        .game-status {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .game-completed {
+            background: rgba(6, 95, 70, 0.3);
+            color: #6ee7b7;
+        }
+
+        .game-pending {
+            background: rgba(120, 113, 108, 0.3);
+            color: #d6d3d1;
         }
 
         .simulation-container {
@@ -535,12 +572,6 @@
                 right: 0.5rem;
                 padding: 0.5rem;
             }
-
-            .game-iframe-container iframe {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: 300px !important;
-            }
         }
     </style>
 </head>
@@ -684,24 +715,51 @@
                         <!-- Juego 1: Fracciones Básicas -->
                         <div class="game-container">
                             <div class="game-title">🎯 Juego 1: Identifica Fracciones</div>
-                            <div class="game-iframe-container">
-                                <iframe style="max-width:100%" src="https://wordwall.net/es/embed/2f0923213c9c4a068e527a2d0fae97d9?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+                            <div class="game-description">
+                                Un divertido concurso de preguntas donde deberás identificar y reconocer diferentes representaciones de fracciones.
+                            </div>
+                            <a href="https://wordwall.net/es/resource/2f0923213c9c4a068e527a2d0fae97d9" 
+                               target="_blank" 
+                               class="game-link"
+                               onclick="markGamePlayed(1)">
+                                🚀 ¡Jugar Ahora!
+                            </a>
+                            <div id="game1Status" class="game-status game-pending">
+                                ⏳ Pendiente de jugar
                             </div>
                         </div>
                         
                         <!-- Juego 2: Comparar Fracciones -->
                         <div class="game-container">
                             <div class="game-title">⚖️ Juego 2: Compara Fracciones</div>
-                            <div class="game-iframe-container">
-                                <iframe style="max-width:100%" src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+                            <div class="game-description">
+                                Pon a prueba tu habilidad comparando fracciones y determinando cuál es mayor, menor o si son equivalentes.
+                            </div>
+                            <a href="https://wordwall.net/es/resource/ff0a68a2a4c0420c829b597651b9cd74" 
+                               target="_blank" 
+                               class="game-link"
+                               onclick="markGamePlayed(2)">
+                                🚀 ¡Jugar Ahora!
+                            </a>
+                            <div id="game2Status" class="game-status game-pending">
+                                ⏳ Pendiente de jugar
                             </div>
                         </div>
                         
                         <!-- Juego 3: Fracciones Equivalentes -->
                         <div class="game-container">
                             <div class="game-title">🔄 Juego 3: Fracciones Equivalentes</div>
-                            <div class="game-iframe-container">
-                                <iframe style="max-width:100%" src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+                            <div class="game-description">
+                                Descubre y conecta fracciones que representan la misma cantidad pero con diferentes números.
+                            </div>
+                            <a href="https://wordwall.net/es/resource/084ecc5570164bd0a16ae4d299cc744b" 
+                               target="_blank" 
+                               class="game-link"
+                               onclick="markGamePlayed(3)">
+                                🚀 ¡Jugar Ahora!
+                            </a>
+                            <div id="game3Status" class="game-status game-pending">
+                                ⏳ Pendiente de jugar
                             </div>
                         </div>
                     </div>
@@ -709,6 +767,9 @@
                     <!-- Badge 2 Claim -->
                     <div class="claim-section">
                         <p style="margin-bottom: 1rem; font-size: 1.125rem;">¡Has completado los juegos de práctica!</p>
+                        <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #9ca3af;">
+                            💡 Tip: Los juegos se abren en una nueva pestaña. Vuelve aquí cuando termines de jugar los 3.
+                        </p>
                         <button class="btn" onclick="claimBadge2()" id="claimBadge2Btn">Reclamar Insignia 2</button>
                         <div id="badge2Success" class="success-message hidden"></div>
                     </div>
@@ -780,6 +841,11 @@
                 badge1: false,
                 badge2: false,
                 badge3: false
+            },
+            gamesPlayed: {
+                game1: false,
+                game2: false,
+                game3: false
             }
         };
 
@@ -811,6 +877,29 @@
                 console.log('Training started successfully');
             } else {
                 console.error('Could not find required elements');
+            }
+        }
+
+        // Mark game as played
+        function markGamePlayed(gameNumber) {
+            gameState.gamesPlayed[`game${gameNumber}`] = true;
+            
+            // Update status
+            const statusElement = document.getElementById(`game${gameNumber}Status`);
+            if (statusElement) {
+                statusElement.className = 'game-status game-completed';
+                statusElement.innerHTML = '✅ ¡Completado!';
+            }
+            
+            // Check if all games are played
+            const allGamesPlayed = Object.values(gameState.gamesPlayed).every(played => played);
+            if (allGamesPlayed) {
+                // Enable badge 2 claim button
+                const claimBadge2Btn = document.getElementById('claimBadge2Btn');
+                if (claimBadge2Btn) {
+                    claimBadge2Btn.style.background = '#059669';
+                    claimBadge2Btn.style.animation = 'pulse 2s infinite';
+                }
             }
         }
 
@@ -861,6 +950,13 @@
         // Claim Badge 2
         function claimBadge2() {
             if (!gameState.badges.badge1) return;
+            
+            // Check if all games are played
+            const allGamesPlayed = Object.values(gameState.gamesPlayed).every(played => played);
+            if (!allGamesPlayed) {
+                alert('¡Debes completar los 3 juegos antes de reclamar esta insignia! 🎮');
+                return;
+            }
             
             gameState.badges.badge2 = true;
             
@@ -1035,6 +1131,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Fractonia loaded - Ready to start adventure!');
         });
+
+        // Add pulse animation for the claim button
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
