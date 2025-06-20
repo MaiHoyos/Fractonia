@@ -54,6 +54,28 @@
       border: none;
     }
 
+    input[type="text"] {
+      padding: 0.5em;
+      margin: 1em 0.5em;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 0.5em 1em;
+      background-color: #00cc66;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    .badge {
+      font-size: 0.8em;
+      margin-top: 1em;
+      color: #FFD700;
+    }
+
     footer {
       padding: 1em;
       text-align: center;
@@ -72,54 +94,29 @@
 </header>
 
 <section class="gem-section">
-  <h2>🌱 Entrenamiento - Gema de la Tierra</h2>
-  <p>Antes de enfrentar al esqueleto guardián, debes entrenar.</p>
-  <ul style="text-align:left; max-width: 600px; margin: 0 auto;">
-    <li>¿Qué es una fracción? Definición básica.</li>
-    <li>Ejercicios: ¿Cómo representar una fracción como 3/5?</li>
-    <li>Problemas: "Hay 8 partes y pinto 2, ¿qué fracción es?"</li>
-  </ul>
-  <a class="boton" href="#tierra">Ir a buscar la gema</a>
-</section>
+  <h2>🎓 Entrenamiento para la Aventura</h2>
 
-<section class="gem-section">
-  <h2>💨 Entrenamiento - Gema del Aire</h2>
-  <p>Antes de cruzar la sala encantada, domina las fracciones visuales.</p>
-  <ul style="text-align:left; max-width: 600px; margin: 0 auto;">
-    <li>¿Cómo se representa 2/3 con dibujos?</li>
-    <li>Identificar fracciones propias e impropias visualmente.</li>
-    <li>Ejercicio: Ordena 1/4, 3/4, 2/4 de menor a mayor.</li>
-  </ul>
-  <a class="boton" href="#aire">Ir a buscar la gema</a>
-</section>
+  <p>¿Qué son las fracciones?</p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/c9cTIjBqFTw?si=YeGAoz0S06qFwXg6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<section class="gem-section">
-  <h2>💧 Entrenamiento - Gema del Agua</h2>
-  <p>Prepárate para los acertijos del río de las fracciones.</p>
-  <ul style="text-align:left; max-width: 600px; margin: 0 auto;">
-    <li>¿Qué fracción representa "cinco doceavos"?</li>
-    <li>¿Cómo lees la fracción 2/4?</li>
-    <li>¿Qué fracción es homogénea a 5/8?</li>
-  </ul>
-  <a class="boton" href="#agua">Ir a buscar la gema</a>
-</section>
+  <p>Aprende a leer fracciones</p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/DVXZi9ZWFvo?si=2429iEQKauDrrV_e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<section class="gem-section">
-  <h2>🔥 Entrenamiento - Gema del Fuego</h2>
-  <p>El volcán te espera, pero primero aprende a clasificar.</p>
-  <ul style="text-align:left; max-width: 600px; margin: 0 auto;">
-    <li>Observar fracciones representadas gráficamente.</li>
-    <li>¿Es esta fracción propia, impropia o unidad?</li>
-    <li>Clasifica: 5/4, 2/2, 3/5, 6/6.</li>
-  </ul>
-  <a class="boton" href="#fuego">Ir a buscar la gema</a>
+  <p>¡Practica lo aprendido!</p>
+  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/2f0923213c9c4a068e527a2d0fae97d9?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+  <iframe src="https://phet.colorado.edu/sims/html/fraction-matcher/latest/fraction-matcher_es.html" width="800" height="600" allowfullscreen></iframe>
+
+  <p>Escribe tu nombre y reclama tu insignia de entrenamiento:</p>
+  <input type="text" id="nombreAlumno" placeholder="Tu nombre aquí">
+  <button onclick="mostrarInsignia()">Enviar</button>
+  <div class="badge" id="insignia"></div>
 </section>
 
 <section>
-  <h2>🐉 Evaluación Final: La Mazmorra del Dragón</h2>
-  <p>Has reunido las cuatro gemas elementales. Ahora, enfrenta al dragón y restaura el equilibrio fraccional.</p>
-
-  <!-- INCRUSTACIÓN DEL JUEGO FINAL -->
+  <h2>🐉 Expedición: ¡La Mazmorra del Dragón!</h2>
+  <p>Has entrenado con éxito. Ahora comienza la expedición para recuperar las gemas perdidas.</p>
   <div style="width: 100%;">
     <div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;">
       <iframe title="Copia - BREAKOUT LA MAZMORRA DEL DRAGÓN" frameborder="0" width="1200" height="675"
@@ -134,6 +131,17 @@
 <footer>
   © 2025 Un proyecto de Maileen Hoyos | Inspirado en el poder de las fracciones
 </footer>
+
+<script>
+function mostrarInsignia() {
+  const nombre = document.getElementById("nombreAlumno").value;
+  if (nombre.trim() !== "") {
+    document.getElementById("insignia").innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado la Insignia de Entrenamiento.`;
+  } else {
+    document.getElementById("insignia").innerText = "Por favor, escribe tu nombre para recibir tu insignia.";
+  }
+}
+</script>
 
 </body>
 </html>
