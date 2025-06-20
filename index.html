@@ -454,23 +454,39 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Game Screen - Full screen for Genially */
         .game-screen {
-            padding: 2rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 1500;
         }
 
-        .game-header {
-            color: #ef4444;
-            border-color: rgba(239, 68, 68, 0.3);
+        .game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
-        .back-btn {
-            background: #374151;
-            border: 1px solid #4b5563;
-            margin-bottom: 1rem;
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1600;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border: 1px solid #fbbf24;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-size: 0.875rem;
         }
 
-        .back-btn:hover {
-            background: #4b5563;
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.9);
         }
 
         footer {
@@ -550,8 +566,8 @@
         </div>
     </div>
 
-    <!-- Main Game Content -->
-    <div id="mainGame" class="hidden">
+    <!-- Training Content -->
+    <div id="trainingContent" class="hidden">
         <!-- Header -->
         <header style="text-align: center; padding: 2rem 1rem;">
             <div class="header-character">
@@ -689,34 +705,21 @@
                 </div>
             </div>
         </div>
+
+        <footer>
+            © 2025 Un proyecto de Maileen Hoyos | Inspirado en el poder de las fracciones
+        </footer>
     </div>
 
-    <!-- Game Screen -->
-    <div id="gameScreen" class="hidden">
-        <div class="container game-screen">
-            <div class="card game-header">
-                <h2 style="font-size: 1.5rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                    🐉 ¡La Aventura Comienza!
-                    <span id="gameCharacterEmoji"></span>
-                </h2>
-                
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <p style="font-size: 1.125rem; margin-bottom: 1rem;" id="congratsMessage"></p>
-                    <p style="font-size: 1.125rem; margin-bottom: 2rem;" id="readyMessage"></p>
-                    <button class="btn back-btn" onclick="backToTraining()">← Volver al Entrenamiento</button>
-                </div>
-
-                <div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 0.5rem;"
-                            title="Copia - BREAKOUT LA MAZMORRA DEL DRAGÓN"
-                            frameborder="0"
-                            src="https://view.genially.com/652fc66d4793ce001022f8a3"
-                            allowfullscreen
-                            scrolling="yes">
-                    </iframe>
-                </div>
-            </div>
-        </div>
+    <!-- Game Screen - Full Screen Genially -->
+    <div id="gameScreen" class="game-screen hidden">
+        <button class="back-button" onclick="backToTraining()">← Volver al Entrenamiento</button>
+        <iframe class="game-iframe"
+                title="La Mazmorra del Dragón - Fractonia"
+                src="https://view.genially.com/652fc66d4793ce001022f8a3"
+                allowfullscreen
+                scrolling="yes">
+        </iframe>
     </div>
 
     <!-- Adventure Modal -->
@@ -739,10 +742,6 @@
         </div>
     </div>
 
-    <footer>
-        © 2025 Un proyecto de Maileen Hoyos | Inspirado en el poder de las fracciones
-    </footer>
-
     <script>
         // Game state
         let gameState = {
@@ -763,13 +762,13 @@
             gameState.selectedCharacter = character;
             gameState.gameStarted = true;
             
-            // Hide character selection
+            // Hide character selection and show training
             const characterSelection = document.getElementById('characterSelection');
-            const mainGame = document.getElementById('mainGame');
+            const trainingContent = document.getElementById('trainingContent');
             
-            if (characterSelection && mainGame) {
+            if (characterSelection && trainingContent) {
                 characterSelection.classList.add('hidden');
-                mainGame.classList.remove('hidden');
+                trainingContent.classList.remove('hidden');
                 
                 // Update character display
                 const emoji = character === 'boy' ? '👦' : '👧';
@@ -781,7 +780,7 @@
                 if (characterEmoji) characterEmoji.textContent = emoji;
                 if (characterInfo) characterInfo.textContent = `Jugando como: ${name}`;
                 
-                console.log('Game started successfully');
+                console.log('Training started successfully');
             } else {
                 console.error('Could not find required elements');
             }
@@ -980,42 +979,33 @@
             }
         }
 
-        // Show game screen
+        // Show game screen - Hide everything and show only Genially
         function showGameScreen() {
-            const mainGame = document.getElementById('mainGame');
+            const trainingContent = document.getElementById('trainingContent');
             const gameScreen = document.getElementById('gameScreen');
+            const floatingBadges = document.getElementById('floatingBadges');
             
-            if (!mainGame || !gameScreen) return;
+            if (trainingContent) trainingContent.classList.add('hidden');
+            if (gameScreen) gameScreen.classList.remove('hidden');
+            if (floatingBadges) floatingBadges.classList.add('hidden'); // Hide badges during game
             
-            mainGame.classList.add('hidden');
-            gameScreen.classList.remove('hidden');
-            
-            const characterEmoji = gameState.selectedCharacter === 'boy' ? '👦 Alex' : '👧 Emma';
-            const characterName = gameState.selectedCharacter === 'boy' ? 'Alex' : 'Emma';
-            
-            const gameCharacterEmoji = document.getElementById('gameCharacterEmoji');
-            const congratsMessage = document.getElementById('congratsMessage');
-            const readyMessage = document.getElementById('readyMessage');
-            
-            if (gameCharacterEmoji) gameCharacterEmoji.textContent = characterEmoji;
-            if (congratsMessage) congratsMessage.textContent = `¡Felicidades, ${gameState.currentName}! Has completado tu entrenamiento y obtenido las 3 insignias sagradas.`;
-            if (readyMessage) readyMessage.textContent = `Ahora ${characterName} está listo para la expedición final para recuperar las gemas perdidas.`;
+            console.log('Game screen shown - Full screen Genially');
         }
 
         // Back to training
         function backToTraining() {
             const gameScreen = document.getElementById('gameScreen');
-            const mainGame = document.getElementById('mainGame');
+            const trainingContent = document.getElementById('trainingContent');
+            const floatingBadges = document.getElementById('floatingBadges');
             
-            if (gameScreen && mainGame) {
-                gameScreen.classList.add('hidden');
-                mainGame.classList.remove('hidden');
-            }
+            if (gameScreen) gameScreen.classList.add('hidden');
+            if (trainingContent) trainingContent.classList.remove('hidden');
+            if (floatingBadges && gameState.badges.badge1) floatingBadges.classList.remove('hidden'); // Show badges again
         }
 
         // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Page loaded, game ready');
+            console.log('Fractonia loaded - Ready to start adventure!');
         });
     </script>
 </body>
