@@ -1,171 +1,454 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>La Tierra de Fractonia</title>
-  <style>
-    body {
-      background-color: #111;
-      color: #fff;
-      font-family: 'Press Start 2P', monospace;
-      margin: 0;
-      padding: 0;
-    }
+"use client"
 
-    header, section {
-      padding: 2em;
-      text-align: center;
-    }
+import { useState } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Play, GamepadIcon, FlaskConical, CheckCircle, Sparkles } from 'lucide-react'
 
-    h1 {
-      font-size: 1.8em;
-      color: #FFD700;
-      text-shadow: 2px 2px #000;
-    }
+export default function FractoniaAdventure() {
+  const [gameStarted, setGameStarted] = useState(false)
+  const [selectedCharacter, setSelectedCharacter] = useState<"boy" | "girl" | null>(null)
+  const [studentName, setStudentName] = useState("")
+  const [badges, setBadges] = useState({
+    badge1: false, // Videos completed
+    badge2: false, // Wordwall games completed
+    badge3: false, // PhET simulation completed
+  })
+  const [currentName, setCurrentName] = useState("")
+  const [showAdventureModal, setShowAdventureModal] = useState(false)
+  const [showGame, setShowGame] = useState(false)
 
-    h2 {
-      color: #00FFFF;
-      font-size: 1.4em;
-      margin-top: 2em;
-    }
-
-    .gem-section {
-      border: 2px dashed #555;
-      margin: 2em;
-      padding: 1em;
-      border-radius: 10px;
-      background-color: #222;
-    }
-
-    a.boton {
-      display: inline-block;
-      margin: 1em auto;
-      padding: 0.5em 1.5em;
-      background-color: #ff4444;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-size: 0.8em;
-      box-shadow: 2px 2px 0 #000;
-    }
-
-    iframe {
-      border: none;
-    }
-
-    input[type="text"] {
-      padding: 0.5em;
-      margin: 1em 0.5em;
-      font-size: 1em;
-    }
-
-    button {
-      padding: 0.5em 1em;
-      background-color: #00cc66;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
-    }
-
-    .badge {
-      font-size: 0.8em;
-      margin-top: 1em;
-      color: #FFD700;
-    }
-
-    .insignia-img {
-      margin-top: 1em;
-      max-width: 150px;
-      display: none;
-    }
-
-    footer {
-      padding: 1em;
-      text-align: center;
-      font-size: 0.7em;
-      background-color: #000;
-      color: #888;
-    }
-  </style>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<header>
-  <h1>La Tierra de Fractonia</h1>
-  <p>Un reino donde el poder de las fracciones puede salvarnos del caos...</p>
-</header>
-
-<section class="gem-section">
-  <h2>🎓 Entrenamiento para la Aventura</h2>
-
-  <p>¿Qué son las fracciones?</p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/c9cTIjBqFTw?si=YeGAoz0S06qFwXg6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-  <p>Escribe tu nombre para obtener la insignia 1:</p>
-  <input type="text" id="nombre1" placeholder="Tu nombre aquí">
-  <button onclick="mostrarInsignia('nombre1', 'insignia1', 'imgInsignia1')">Enviar</button>
-  <div class="badge" id="insignia1"></div>
-  <img id="imgInsignia1" class="insignia-img" src="1.png" alt="Insignia 1">
-
-  <p>Aprende a leer fracciones</p>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/DVXZi9ZWFvo?si=2429iEQKauDrrV_e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-  <p>¡Practica lo aprendido!</p>
-  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/2f0923213c9c4a068e527a2d0fae97d9?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
-  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
-  <iframe style="max-width:100%" src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
-
-  <p>Escribe tu nombre para obtener la insignia 2:</p>
-  <input type="text" id="nombre2" placeholder="Tu nombre aquí">
-  <button onclick="mostrarInsignia('nombre2', 'insignia2', 'imgInsignia2')">Enviar</button>
-  <div class="badge" id="insignia2"></div>
-  <img id="imgInsignia2" class="insignia-img" src="2.png" alt="Insignia 2">
-
-  <iframe src="https://phet.colorado.edu/sims/html/fraction-matcher/latest/fraction-matcher_es.html" width="800" height="600" allowfullscreen></iframe>
-
-  <p>Escribe tu nombre para obtener la insignia 3:</p>
-  <input type="text" id="nombre3" placeholder="Tu nombre aquí">
-  <button onclick="mostrarInsignia('nombre3', 'insignia3', 'imgInsignia3')">Enviar</button>
-  <div class="badge" id="insignia3"></div>
-  <img id="imgInsignia3" class="insignia-img" src="3.png" alt="Insignia 3">
-</section>
-
-<section>
-  <h2>🐉 Expedición: ¡La Mazmorra del Dragón!</h2>
-  <p>Has entrenado con éxito. Ahora comienza la expedición para recuperar las gemas perdidas.</p>
-  <div style="width: 100%;">
-    <div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;">
-      <iframe title="Copia - BREAKOUT LA MAZMORRA DEL DRAGÓN" frameborder="0" width="1200" height="675"
-              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-              src="https://view.genially.com/652fc66d4793ce001022f8a3" type="text/html"
-              allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all">
-      </iframe>
-    </div>
-  </div>
-</section>
-
-<footer>
-  © 2025 Un proyecto de Maileen Hoyos | Inspirado en el poder de las fracciones
-</footer>
-
-<script>
-function mostrarInsignia(inputId, mensajeId, imagenId) {
-  const nombre = document.getElementById(inputId).value;
-  const insignia = document.getElementById(mensajeId);
-  const img = document.getElementById(imagenId);
-  if (nombre.trim() !== "") {
-    insignia.innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado una insignia.`;
-    img.style.display = 'block';
-  } else {
-    insignia.innerText = "Por favor, escribe tu nombre para recibir tu insignia.";
-    img.style.display = 'none';
+  const startGame = (character: "boy" | "girl") => {
+    setSelectedCharacter(character)
+    setGameStarted(true)
   }
-}
-</script>
 
-</body>
-</html>
+  const claimBadge1 = () => {
+    if (studentName.trim()) {
+      setBadges((prev) => ({ ...prev, badge1: true }))
+      setCurrentName(studentName)
+      setStudentName("")
+    }
+  }
+
+  const claimBadge2 = () => {
+    if (badges.badge1) {
+      setBadges((prev) => ({ ...prev, badge2: true }))
+    }
+  }
+
+  const claimBadge3 = () => {
+    if (badges.badge2) {
+      setBadges((prev) => ({ ...prev, badge3: true }))
+      // Show adventure modal when all badges are completed
+      setTimeout(() => setShowAdventureModal(true), 1000)
+    }
+  }
+
+  const handleAdventureResponse = (ready: boolean) => {
+    setShowAdventureModal(false)
+    if (ready) {
+      setShowGame(true)
+    }
+  }
+
+  // Character Selection Screen
+  if (!gameStarted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white flex items-center justify-center">
+        <Card className="max-w-4xl mx-4 bg-gray-800/50 border-yellow-500/30">
+          <CardHeader className="text-center">
+            <CardTitle
+              className="text-4xl md:text-6xl font-bold text-yellow-400 mb-4"
+              style={{ fontFamily: "Press Start 2P, monospace" }}
+            >
+              La Tierra de Fractonia
+            </CardTitle>
+            <CardDescription className="text-xl text-gray-300">
+              ¡Bienvenido, valiente aventurero! Antes de comenzar tu épica aventura en el reino de las fracciones, debes
+              elegir tu personaje.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-yellow-400 mb-6">✨ Selecciona tu Personaje ✨</h2>
+
+              <div className="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                {/* Character 1 - Boy */}
+                <div className="text-center">
+                  <div
+                    className="bg-gray-700/50 p-6 rounded-lg hover:bg-gray-600/50 transition-colors cursor-pointer border-2 border-transparent hover:border-blue-500"
+                    onClick={() => startGame("boy")}
+                  >
+                    <div className="w-32 h-32 mx-auto mb-4 bg-blue-500/20 rounded-full flex items-center justify-center">
+                      <img
+                        src="/placeholder.svg?height=120&width=120"
+                        alt="Personaje Masculino"
+                        className="w-24 h-24 rounded-full"
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-blue-400 mb-2">Aventurero Alex</h3>
+                    <p className="text-gray-300 text-sm">
+                      Valiente y determinado, Alex está listo para enfrentar cualquier desafío matemático.
+                    </p>
+                    <Button className="mt-4 bg-blue-600 hover:bg-blue-700">Elegir Alex</Button>
+                  </div>
+                </div>
+
+                {/* Character 2 - Girl */}
+                <div className="text-center">
+                  <div
+                    className="bg-gray-700/50 p-6 rounded-lg hover:bg-gray-600/50 transition-colors cursor-pointer border-2 border-transparent hover:border-pink-500"
+                    onClick={() => startGame("girl")}
+                  >
+                    <div className="w-32 h-32 mx-auto mb-4 bg-pink-500/20 rounded-full flex items-center justify-center">
+                      <img
+                        src="/placeholder.svg?height=120&width=120"
+                        alt="Personaje Femenino"
+                        className="w-24 h-24 rounded-full"
+                      />
+                    </div>
+                    <h3 className="text-xl font-bold text-pink-400 mb-2">Exploradora Emma</h3>
+                    <p className="text-gray-300 text-sm">
+                      Inteligente y curiosa, Emma domina las fracciones con facilidad y gracia.
+                    </p>
+                    <Button className="mt-4 bg-pink-600 hover:bg-pink-700">Elegir Emma</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <p className="text-gray-400 text-sm">💡 Tip: Puedes cambiar tu personaje más tarde en la configuración</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  // Show Game Screen
+  if (showGame) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <Card className="bg-gray-800/50 border-red-500/30">
+            <CardHeader>
+              <CardTitle className="text-2xl text-red-400 text-center flex items-center justify-center gap-2">
+                🐉 ¡La Aventura Comienza!
+                <span className="text-lg">{selectedCharacter === "boy" ? "👦 Alex" : "👧 Emma"}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-center mb-6">
+                <p className="text-lg mb-4">
+                  ¡Felicidades, {currentName}! Has completado tu entrenamiento y obtenido las 3 insignias sagradas.
+                </p>
+                <p className="text-lg mb-6">
+                  Ahora {selectedCharacter === "boy" ? "Alex" : "Emma"} está listo para la expedición final para
+                  recuperar las gemas perdidas.
+                </p>
+                <Button
+                  onClick={() => setShowGame(false)}
+                  variant="outline"
+                  className="mb-4 bg-gray-700 text-white border-gray-600 hover:bg-gray-600"
+                >
+                  ← Volver al Entrenamiento
+                </Button>
+              </div>
+
+              <div className="aspect-video">
+                <iframe
+                  className="w-full h-full rounded-lg"
+                  title="Copia - BREAKOUT LA MAZMORRA DEL DRAGÓN"
+                  frameBorder="0"
+                  src="https://view.genially.com/652fc66d4793ce001022f8a3"
+                  allowScriptAccess="always"
+                  allowFullScreen
+                  scrolling="yes"
+                  allowNetworking="all"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    )
+  }
+
+  // Main Game Content
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-blue-900 to-black text-white">
+      {/* Adventure Modal */}
+      <Dialog open={showAdventureModal} onOpenChange={setShowAdventureModal}>
+        <DialogContent className="bg-gray-800 border-yellow-500/30 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl text-yellow-400 text-center flex items-center justify-center gap-2">
+              <Sparkles className="w-6 h-6" />
+              ¡Entrenamiento Completado!
+              <Sparkles className="w-6 h-6" />
+            </DialogTitle>
+            <DialogDescription className="text-center text-gray-300 text-lg">
+              ¡Increíble, {currentName}! Has obtenido las 3 insignias sagradas de Fractonia.
+              <br />
+              <br />
+              {selectedCharacter === "boy" ? "👦 Alex" : "👧 Emma"} está preparado para la aventura final.
+              <br />
+              <br />
+              ¿Estás listo para enfrentar la Mazmorra del Dragón?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-4 justify-center mt-6">
+            <Button onClick={() => handleAdventureResponse(true)} className="bg-green-600 hover:bg-green-700">
+              ¡Sí, estoy listo! 🗡️
+            </Button>
+            <Button
+              onClick={() => handleAdventureResponse(false)}
+              variant="outline"
+              className="bg-gray-700 text-white border-gray-600 hover:bg-gray-600"
+            >
+              Necesito más práctica 📚
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Header */}
+      <header className="text-center py-8 px-4">
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <h1
+            className="text-4xl md:text-6xl font-bold text-yellow-400"
+            style={{ fontFamily: "Press Start 2P, monospace" }}
+          >
+            La Tierra de Fractonia
+          </h1>
+          <div className="text-2xl">{selectedCharacter === "boy" ? "👦" : "👧"}</div>
+        </div>
+        <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
+          Un reino donde el poder de las fracciones puede salvarnos del caos...
+        </p>
+        <p className="text-sm text-gray-400 mt-2">
+          Jugando como: {selectedCharacter === "boy" ? "Alex el Aventurero" : "Emma la Exploradora"}
+        </p>
+      </header>
+
+      {/* Badge Progress */}
+      <div className="max-w-4xl mx-auto px-4 mb-8">
+        <Card className="bg-gray-800/50 border-yellow-500/30">
+          <CardHeader>
+            <CardTitle className="text-yellow-400 text-center">🏆 Progreso de Insignias</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-center gap-8 flex-wrap">
+              <div className="text-center">
+                <div
+                  className={`w-20 h-20 mx-auto mb-2 rounded-full border-4 ${badges.badge1 ? "border-green-500" : "border-gray-500"} flex items-center justify-center`}
+                >
+                  {badges.badge1 ? (
+                    <img src="/badge1.png" alt="Insignia 1" className="w-16 h-16" />
+                  ) : (
+                    <Play className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <Badge variant={badges.badge1 ? "default" : "secondary"}>Insignia 1: Videos</Badge>
+              </div>
+
+              <div className="text-center">
+                <div
+                  className={`w-20 h-20 mx-auto mb-2 rounded-full border-4 ${badges.badge2 ? "border-green-500" : "border-gray-500"} flex items-center justify-center`}
+                >
+                  {badges.badge2 ? (
+                    <img src="/badge3.png" alt="Insignia 2" className="w-16 h-16" />
+                  ) : (
+                    <GamepadIcon className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <Badge variant={badges.badge2 ? "default" : "secondary"}>Insignia 2: Juegos</Badge>
+              </div>
+
+              <div className="text-center">
+                <div
+                  className={`w-20 h-20 mx-auto mb-2 rounded-full border-4 ${badges.badge3 ? "border-green-500" : "border-gray-500"} flex items-center justify-center`}
+                >
+                  {badges.badge3 ? (
+                    <img src="/badge2.png" alt="Insignia 3" className="w-16 h-16" />
+                  ) : (
+                    <FlaskConical className="w-8 h-8 text-gray-400" />
+                  )}
+                </div>
+                <Badge variant={badges.badge3 ? "default" : "secondary"}>Insignia 3: Simulación</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Training Section */}
+      <section className="max-w-6xl mx-auto px-4 mb-12">
+        <Card className="bg-gray-800/50 border-yellow-500/30">
+          <CardHeader>
+            <CardTitle className="text-2xl text-yellow-400 text-center">🎓 Entrenamiento para la Aventura</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-8">
+            {/* Videos Section */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-center">📹 Videos Educativos</h3>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="text-center">
+                  <p className="mb-4 text-lg">¿Qué son las fracciones?</p>
+                  <div className="aspect-video">
+                    <iframe
+                      className="w-full h-full rounded-lg"
+                      src="https://www.youtube.com/embed/c9cTIjBqFTw?si=YeGAoz0S06qFwXg6"
+                      title="¿Qué son las fracciones?"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <p className="mb-4 text-lg">Aprende a leer fracciones</p>
+                  <div className="aspect-video">
+                    <iframe
+                      className="w-full h-full rounded-lg"
+                      src="https://www.youtube.com/embed/DVXZi9ZWFvo?si=2429iEQKauDrrV_e"
+                      title="Aprende a leer fracciones"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Badge 1 Claim */}
+              <div className="text-center bg-gray-700/50 p-6 rounded-lg">
+                <p className="mb-4 text-lg">
+                  ¡Has completado los videos! Escribe tu nombre para reclamar tu primera insignia:
+                </p>
+                <div className="flex gap-4 justify-center items-center flex-wrap">
+                  <Input
+                    type="text"
+                    placeholder="Tu nombre aquí"
+                    value={studentName}
+                    onChange={(e) => setStudentName(e.target.value)}
+                    className="max-w-xs bg-gray-800 border-gray-600"
+                  />
+                  <Button
+                    onClick={claimBadge1}
+                    disabled={!studentName.trim() || badges.badge1}
+                    className="bg-yellow-600 hover:bg-yellow-700"
+                  >
+                    {badges.badge1 ? <CheckCircle className="w-4 h-4 mr-2" /> : null}
+                    {badges.badge1 ? "Insignia Obtenida" : "Reclamar Insignia 1"}
+                  </Button>
+                </div>
+                {badges.badge1 && (
+                  <div className="mt-4 p-4 bg-green-800/30 rounded-lg">
+                    <p className="text-green-300 text-lg">
+                      🎖 ¡Felicidades, {currentName}! Has ganado la Insignia de Videos.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Wordwall Games Section */}
+            {badges.badge1 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-center">🎮 ¡Practica lo aprendido!</h3>
+
+                <div className="grid lg:grid-cols-3 gap-6">
+                  <div className="aspect-square">
+                    <iframe
+                      className="w-full h-full rounded-lg"
+                      src="https://wordwall.net/es/embed/2f0923213c9c4a068e527a2d0fae97d9?themeId=21&templateId=69&fontStackId=0"
+                      frameBorder="0"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="aspect-square">
+                    <iframe
+                      className="w-full h-full rounded-lg"
+                      src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0"
+                      frameBorder="0"
+                      allowFullScreen
+                    />
+                  </div>
+                  <div className="aspect-square">
+                    <iframe
+                      className="w-full h-full rounded-lg"
+                      src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0"
+                      frameBorder="0"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+
+                {/* Badge 2 Claim */}
+                <div className="text-center bg-gray-700/50 p-6 rounded-lg">
+                  <p className="mb-4 text-lg">¡Has completado los juegos de práctica!</p>
+                  <Button onClick={claimBadge2} disabled={badges.badge2} className="bg-yellow-600 hover:bg-yellow-700">
+                    {badges.badge2 ? <CheckCircle className="w-4 h-4 mr-2" /> : null}
+                    {badges.badge2 ? "Insignia Obtenida" : "Reclamar Insignia 2"}
+                  </Button>
+                  {badges.badge2 && (
+                    <div className="mt-4 p-4 bg-green-800/30 rounded-lg">
+                      <p className="text-green-300 text-lg">
+                        🎖 ¡Excelente, {currentName}! Has ganado la Insignia de Juegos.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* PhET Simulation Section */}
+            {badges.badge2 && (
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-center">🧪 Simulación Interactiva</h3>
+
+                <div className="aspect-video max-w-4xl mx-auto">
+                  <iframe
+                    className="w-full h-full rounded-lg"
+                    src="https://phet.colorado.edu/sims/html/fraction-matcher/latest/fraction-matcher_es.html"
+                    allowFullScreen
+                  />
+                </div>
+
+                {/* Badge 3 Claim */}
+                <div className="text-center bg-gray-700/50 p-6 rounded-lg">
+                  <p className="mb-4 text-lg">¡Has completado la simulación interactiva!</p>
+                  <Button onClick={claimBadge3} disabled={badges.badge3} className="bg-yellow-600 hover:bg-yellow-700">
+                    {badges.badge3 ? <CheckCircle className="w-4 h-4 mr-2" /> : null}
+                    {badges.badge3 ? "Insignia Obtenida" : "Reclamar Insignia 3"}
+                  </Button>
+                  {badges.badge3 && (
+                    <div className="mt-4 p-4 bg-green-800/30 rounded-lg">
+                      <p className="text-green-300 text-lg">
+                        🎖 ¡Increíble, {currentName}! Has ganado la Insignia de Simulación.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* Footer */}
+      <footer className="text-center py-8 text-gray-400 text-sm">
+        © 2025 Un proyecto de Maileen Hoyos | 
+      </footer>
+    </div>
+  )
+}
