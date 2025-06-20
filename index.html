@@ -76,6 +76,12 @@
       color: #FFD700;
     }
 
+    .insignia-img {
+      margin-top: 1em;
+      max-width: 150px;
+      display: none;
+    }
+
     footer {
       padding: 1em;
       text-align: center;
@@ -106,12 +112,14 @@
   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/2f0923213c9c4a068e527a2d0fae97d9?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/ff0a68a2a4c0420c829b597651b9cd74?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
   <iframe style="max-width:100%" src="https://wordwall.net/es/embed/084ecc5570164bd0a16ae4d299cc744b?themeId=21&templateId=69&fontStackId=0" width="500" height="380" frameborder="0" allowfullscreen></iframe>
+
   <iframe src="https://phet.colorado.edu/sims/html/fraction-matcher/latest/fraction-matcher_es.html" width="800" height="600" allowfullscreen></iframe>
 
   <p>Escribe tu nombre y reclama tu insignia de entrenamiento:</p>
   <input type="text" id="nombreAlumno" placeholder="Tu nombre aquí">
   <button onclick="mostrarInsignia()">Enviar</button>
   <div class="badge" id="insignia"></div>
+  <img id="imgInsignia" class="insignia-img" src="1.png" alt="Insignia obtenida">
 </section>
 
 <section>
@@ -135,10 +143,14 @@
 <script>
 function mostrarInsignia() {
   const nombre = document.getElementById("nombreAlumno").value;
+  const insignia = document.getElementById("insignia");
+  const img = document.getElementById("imgInsignia");
   if (nombre.trim() !== "") {
-    document.getElementById("insignia").innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado la Insignia de Entrenamiento.`;
+    insignia.innerText = `🎖 ¡Felicidades, ${nombre}! Has ganado la Insignia de Entrenamiento.`;
+    img.style.display = 'block';
   } else {
-    document.getElementById("insignia").innerText = "Por favor, escribe tu nombre para recibir tu insignia.";
+    insignia.innerText = "Por favor, escribe tu nombre para recibir tu insignia.";
+    img.style.display = 'none';
   }
 }
 </script>
